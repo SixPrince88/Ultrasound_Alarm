@@ -4,13 +4,13 @@
  *@param:nvic_groupS nvic
  *@retval:无
  */
-void User_NVIC_Init(nvic_init_t nvic)
+void User_NVIC_Init(nvic_init_t *nvic)
 {
 	NVIC_InitTypeDef sys;
-	sys.NVIC_IRQChannel = nvic.channel_x;
+	sys.NVIC_IRQChannel = nvic->channel_x;
 	sys.NVIC_IRQChannelCmd = ENABLE;
-	sys.NVIC_IRQChannelPreemptionPriority = nvic.pre_level;
-	sys.NVIC_IRQChannelSubPriority = nvic.sub_level;
+	sys.NVIC_IRQChannelPreemptionPriority = nvic->pre_level;
+	sys.NVIC_IRQChannelSubPriority = nvic->sub_level;
 	NVIC_Init(&sys);
 }
 /*
@@ -25,6 +25,6 @@ void User_NVIC_All_Init(NVIC_PriGourp_type NVIC_PriGourp, nvic_init_t nvic_group
 	{
 		if ((nvic_group[i].channel_x) == 0)
 			continue;
-		User_NVIC_Init(nvic_group[i]);
+		User_NVIC_Init(&nvic_group[i]);
 	}
 }

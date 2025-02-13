@@ -1,10 +1,8 @@
 #ifndef __USER_GPIO_H
 #define __USER_GPIO_H
 #include "stm32f10x.h"
-#include "stdbool.h"
-#define gpio_type GPIO_TypeDef *
-#define gpio_pin_x uint16_t
-#define gpio_mode_x GPIOMode_TypeDef
+#include <stdbool.h>
+#include <stdio.h>
 
 #define PIN_0 GPIO_Pin_0
 #define PIN_1 GPIO_Pin_1
@@ -66,9 +64,9 @@
 
 typedef struct
 {
-    gpio_type gpio_x;
-    gpio_pin_x pin_x;
-    gpio_mode_x mode_x;
+    GPIO_TypeDef * gpio_x;
+    uint16_t pin_x;
+    GPIOMode_TypeDef mode_x;
     GPIO_Source_Type gpio_x_src;
     Pin_x_Source_Type pin_x_src;
     bool invert;

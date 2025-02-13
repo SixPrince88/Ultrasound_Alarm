@@ -545,11 +545,6 @@
           <GroupName>UserLiBrary</GroupName>
           <Files>
             <File>
-              <FileName>user_adc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\User\UserLibrary\src\user_adc.c</FilePath>
-            </File>
-            <File>
               <FileName>user_delay.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\User\UserLibrary\src\user_delay.c</FilePath>

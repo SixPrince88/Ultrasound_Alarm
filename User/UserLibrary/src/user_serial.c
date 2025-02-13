@@ -4,21 +4,18 @@
  *@param:usartGroupS usart
  *@return:void
  */
-void User_Serial_Init(usart_init_t usart)
+void User_Serial_Init(usart_init_t *usart)
 {
 	USART_InitTypeDef sys;
-	sys.USART_BaudRate = usart.baudrate;
+	sys.USART_BaudRate = usart->baudrate;
 	sys.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
-	sys.USART_Mode = usart.mode_x;
+	sys.USART_Mode = usart->mode_x;
 	sys.USART_Parity = USART_Parity_No;
 	sys.USART_StopBits = USART_StopBits_1;
 	sys.USART_WordLength = USART_WordLength_8b;
-	
-	User_GPIO_All_Init(&usart.rx,1);
-	User_GPIO_All_Init(&usart.tx,1);
-	USART_Init(usart.usart_x, &sys);
-	USART_ITConfig(usart.usart_x, USART_IT_RXNE, ENABLE);
-	USART_Cmd(usart.usart_x, ENABLE);
+	USART_Init(usart->usart_x, &sys);
+	USART_ITConfig(usart->usart_x, USART_IT_RXNE, ENABLE);
+	USART_Cmd(usart->usart_x, ENABLE);
 }
 /*
  *@brief:发送一个字节
@@ -26,7 +23,7 @@ void User_Serial_Init(usart_init_t usart)
  *@param:char Byte
  *@return:void
  */
-void User_Serial_SendByte(usart_type usart_x, uint8_t Byte)
+void User_Serial_SendByte(USART_TypeDef *usart_x, uint8_t Byte)
 {
 	USART_SendData(usart_x, Byte); // 填充数据至 USART3的DR寄存器
 
@@ -40,9 +37,9 @@ void User_Serial_SendByte(usart_type usart_x, uint8_t Byte)
  *@param:char* string
  *@return:void
  */
-void User_Serial_SendString(usart_type usart_x, char *string)
+void User_Serial_SendString(USART_TypeDef *usart_x, char *string)
 {
-	uint8_t i=0;
+	uint8_t i = 0;
 	for (i = 0; string[i] != '\0'; i++)
 	{
 		User_Serial_SendByte(usart_x, string[i]);
@@ -82,7 +79,7 @@ int fgetc(FILE *f)
  *@param:serial_data_groupS *data
  *@return:void
  */
-void User_Serial_printf(usart_type usart_x, char *format, ...)
+void User_Serial_printf(USART_TypeDef *usart_x, char *format, ...)
 {
 	char String[100];
 	va_list arg;
@@ -96,7 +93,8 @@ void User_Serial_printf(usart_type usart_x, char *format, ...)
  *@param:usart_type usart
  *@return:void
  */
-void User_Serial_Test(usart_type usartx){
+void User_Serial_Test(USART_TypeDef *usartx)
+{
 	uint8_t rx_data = USART_ReceiveData(usartx);
 	User_Serial_SendByte(usartx, rx_data);
 }

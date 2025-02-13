@@ -18,9 +18,11 @@ void Board_Init(void)
 		{TIM3_IRQn, 1, 0},
 		{EXTI15_10_IRQn, 2, 0},
 	};
+	gpio_init_t usart1_pins[2]={
+		{.gpio_x = GPIOA, .pin_x = PIN_9, .mode_x = MODE_APP},
+		{.gpio_x = GPIOA, .pin_x = PIN_10, .mode_x = MODE_IPU},
+	};
 	usart_init_t usart1_t = {
-		.tx = {.gpio_x = GPIOA, .pin_x = PIN_9, .mode_x = MODE_APP},
-		.rx = {.gpio_x = GPIOA, .pin_x = PIN_10, .mode_x = MODE_IPU},
 		.usart_x = USART1,
 		.mode_x = MODE_RXTX,
 		.baudrate = 115200,
@@ -30,7 +32,8 @@ void Board_Init(void)
 	RCC_APB2PeriphClockCmd(APB2_AFIO | APB2_GPIOA | APB2_GPIOB | APB2_GPIOC | APB2_TIM1 | APB2_USART1 | APB2_ADC1, ENABLE);
 	GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);
 	User_NVIC_All_Init(NVIC_PriorityGroup_2, nvic_group, sizeof(nvic_group) / sizeof(nvic_group[0]));
-	User_Serial_Init(usart1_t);
+	User_GPIO_All_Init(usart1_pins,2);
+	User_Serial_Init(&usart1_t);
 	HW_Signal_Init();
 }
 int main(void)

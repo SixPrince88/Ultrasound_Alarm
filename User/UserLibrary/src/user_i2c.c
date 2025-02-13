@@ -1,4 +1,6 @@
 #include "user_i2c.h"
+#include "user_gpio.h"
+#include "user_delay.h"
 static void sda_out(bool bit, void *user_data)
 {
     i2c_init_t *sda_data = (i2c_init_t *)user_data;
@@ -24,11 +26,11 @@ static uint8_t sda_in(void *user_data)
 static void scl_out(bool bit, void *user_data)
 {
     i2c_init_t *scl_data = (i2c_init_t *)user_data;
-    gpio_init_t scl = {
+    gpio_init_t scl_pin = {
         .gpio_x = scl_data->scl.gpio_x,
         .pin_x = scl_data->scl.pin_x,
         .mode_x = MODE_OOD};
-    User_GPIO_All_Init(&scl, 1);
+    User_GPIO_All_Init(&scl_pin, 1);
     GPIO_WriteBit(scl_data->scl.gpio_x, scl_data->scl.pin_x, (BitAction)bit);
     if (scl_data->delay_us)
     {
@@ -50,4 +52,20 @@ sw_i2c_OO_t sw_i2c1 = {
     .user_data = (void *)&i2c1_gpio,
 };
 
-sw_i2c_OO_t* sw_i2c1_ptr = &sw_i2c1;
+// I2C_OLED
+i2c_init_t oled_gpio = {
+    .scl.gpio_x = GPIOA,
+    .scl.pin_x = PIN_12,
+    .sda.gpio_x = GPIOA,
+    .sda.pin_x = PIN_15,
+    .delay_us = 0};
+
+sw_i2c_OO_t sw_i2c_oled = {
+    .sda_in = sda_in,
+    .scl_out = scl_out,
+    .sda_out = sda_out,
+    .user_data = (void *)&oled_gpio,
+};
+
+sw_i2c_OO_t *sw_i2c1_ptr = &sw_i2c1;
+sw_i2c_OO_t *sw_i2c_oled_ptr = &sw_i2c_oled;

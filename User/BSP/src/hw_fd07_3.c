@@ -21,7 +21,7 @@ void HW_FD07_3_Init(void)
     User_GPIO_All_Init(fd07_3_pin_T, sizeof(fd07_3_pin_T) / sizeof(fd07_3_pin_T[0]));
 
     timbase_init_t tim = {.tim_x = TIM3, .arr_x = 65535, .psc_x = 7200 - 1};
-    User_TIM_Base_Init(tim);
+    User_TIM_Base_Init(&tim);
     TIM_ITConfig(TIM3, TIM_IT_Update, ENABLE);
     TIM_InternalClockConfig(TIM3);
     TIM_Cmd(TIM3, ENABLE);
@@ -30,7 +30,7 @@ void HW_FD07_3_Init(void)
         .line_x = EXTI_Line10 | EXTI_Line11 | EXTI_Line12, //| EXTI_Line13 | EXTI_Line14 | EXTI_Line15,
         .mode_x = Mode_IT,
         .trig_x = Trig_Double};
-    User_EXTI_Init(exti);
+    User_EXTI_Init(&exti);
 }
 
 void FD07_3_Start(void)

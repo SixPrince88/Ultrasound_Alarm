@@ -1,7 +1,6 @@
 #ifndef __USER_DMA_H
 #define __USER_DMA_H
 #include "stm32f10x.h"
-#define dma_channel_type DMA_Channel_TypeDef *
 #define P2M DMA_DIR_PeripheralSRC
 #define M2P DMA_DIR_PeripheralDST
 
@@ -19,7 +18,7 @@
 
 typedef struct
 {
-    dma_channel_type channel_x;
+    DMA_Channel_TypeDef * channel_x;
     uint32_t buff_size;
     uint32_t direction;
 
@@ -31,6 +30,6 @@ typedef struct
     uint32_t p_inc_state;
     uint32_t p_data_size;
 } dma_init_t;
-void User_DMA_Init(dma_init_t dma);
+void User_DMA_Init(dma_init_t *dma);
 
 #endif

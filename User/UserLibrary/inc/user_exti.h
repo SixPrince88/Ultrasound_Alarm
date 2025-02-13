@@ -37,6 +37,6 @@ typedef struct
     EXTITrigger_TypeDef trig_x;
 } exti_init_t;
 
-void User_EXTI_Init(exti_init_t exti);
+void User_EXTI_Init(exti_init_t *exti);
 
 #endif
