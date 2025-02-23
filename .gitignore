@@ -1,0 +1,12 @@
+/MDK/Objects
+/IAR/Debug
+#后面加/*表示忽略Objects目录下的所有文件，但是不忽略Objects目录本身
+#Objects/*
+#!/Objects/Template.axf
+
+#先忽略掉所有文件，再通过!命令指定不要忽略Objects目录
+#/*
+#!/Objects/
+#先忽略Objects目录，再通过/*命令指定忽略Objects目录下的指定文件
+#/Objects/*
+#!/Objects/Template.axf
